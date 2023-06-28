@@ -1,0 +1,39 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: twemproxy
+  namespace: twemproxy
+  labels:
+    app: twemproxy
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: twemproxy
+  strategy: {}
+  template:
+    metadata:
+      labels:
+        app: twemproxy
+    spec:
+      containers:
+      - name: twemproxy
+        image: asia.gcr.io/airasia-hotelsbe-prd/twemproxy:twemproxy-2.0.2
+        imagePullPolicy: Always
+        ports:
+        - name: twemproxy
+          containerPort: 22121
+        resources:
+          requests:
+            memory: 256Mi
+            cpu: 100m
+        volumeMounts:
+        - name: "twemproxy-conf"
+          mountPath: "/etc/twemproxy/conf"
+      volumes:
+        - name: "twemproxy-conf"
+          configMap:
+            name: "twemproxy-conf"
+            items:
+              - key: "twemproxy.yaml"
+                path: "twemproxy.yaml"
