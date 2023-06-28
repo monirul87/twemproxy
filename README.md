@@ -54,4 +54,7 @@ apt-get install iputils-ping
 redis-cli -h twemproxy -p 22121
 ```
 
-
+## twemproxy redis cluster ref
+```
+https://github.com/twitter/twemproxy
+```
